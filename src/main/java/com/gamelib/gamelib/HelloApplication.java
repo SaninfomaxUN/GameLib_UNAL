@@ -1,5 +1,8 @@
 package com.gamelib.gamelib;
 
+import com.api.igdb.exceptions.RequestException;
+import com.api.igdb.request.TwitchAuthenticator;
+import com.gamelib.Connection.IGDBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,9 +18,11 @@ public class HelloApplication extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RequestException {
         launch();
     }
 }
