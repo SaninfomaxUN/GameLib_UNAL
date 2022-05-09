@@ -1,0 +1,10 @@
+#btn_Steam{
+    -fx-font-size: 12;
+    -fx-background-image: url("/com/gamelib/assets/steam.png");
+    -fx-background-size: 30px 30px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-cursor: HAND;
+    -fx-border-color: #53b5cd;
+    -fx-border-width: 3px;
+}
