@@ -2,13 +2,13 @@ package com.gamelib.Logic.Structures;
 
 import java.util.Arrays;
 
-public class DynamicArray {
+public class DynamicArray<T> {
     private int size;
     private int usedSpace;
-    private int array[];
+    private T array[];
 
     public DynamicArray(){
-        this.array = new int[2];
+        this.array = (T[]) new Object[4];
         this.usedSpace = 0;
         this.size = 2;
     }
@@ -17,7 +17,7 @@ public class DynamicArray {
         if (usedSpace == size) {
 
 
-            int temp[] = new int[size*2];
+            T temp[] = (T[]) new Object[size*2];
 
             for (int i = 0; i < size; i++) {
                 temp[i] = array[i];
@@ -28,16 +28,16 @@ public class DynamicArray {
         }
     }
 
-    public void add(int var){
+    public void add(T var){
         growSize();
 
         array[usedSpace] = var;
         usedSpace++;
     }
 
-    public void add(int var, int index){
+    public void add(T var, int index){
         growSize();
-        int temp[] = new int[size];
+        T temp[] = (T[])new Object[size];
 
         for (int i = 0; i < usedSpace; i++){
             if ( i < index){
@@ -55,9 +55,9 @@ public class DynamicArray {
         usedSpace++;
     }
 
-    public int delete(){
-        int temp[] = new int[size];
-        int temp2 = 0;
+    public T delete(){
+        T temp[] = (T[]) new Object[size];
+        T temp2 = null;
 
         for (int i = 0; i < usedSpace; i++){
             if (i+1 == usedSpace) {
@@ -71,9 +71,9 @@ public class DynamicArray {
         return temp2;
     }
 
-    public int delete(int index){
-        int temp[] = new int[size];
-        int temp2 = 0;
+    public T delete(int index){
+        T temp[] = (T[]) new Object[size];
+        T temp2 = null;
 
         for (int i = 0; i < usedSpace; i++){
             if ( i < index){
@@ -92,7 +92,7 @@ public class DynamicArray {
     }
 
     public void print(){
-        int temp[] = new int[usedSpace];
+        T temp[] = (T[]) new Object[usedSpace];
         for (int i = 0; i < usedSpace; i++)
             temp[i]  = array[i];
         System.out.println(Arrays.toString(temp));

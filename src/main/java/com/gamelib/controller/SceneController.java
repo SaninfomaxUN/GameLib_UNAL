@@ -22,7 +22,7 @@ public class SceneController {
             stage = new Stage();
         }
         root = FXMLLoader.load(SceneController.class.getResource("app.fxml"));
-        //stage.setTitle(details.getNameAPP());
+        stage.setTitle("GameLib");
         //stage.getIcons().add(details.getIconAPP());
         if(scene == null){
             scene = new Scene(root);
