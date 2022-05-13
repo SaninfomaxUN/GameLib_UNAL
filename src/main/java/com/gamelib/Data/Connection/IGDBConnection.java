@@ -1,14 +1,8 @@
 package com.gamelib.Data.Connection;
 
-import com.api.igdb.apicalypse.APICalypse;
-import com.api.igdb.exceptions.RequestException;
+
 import com.api.igdb.request.IGDBWrapper;
-import com.api.igdb.request.ProtoRequestKt;
 import com.api.igdb.request.TwitchAuthenticator;
-import proto.Game;
-
-import java.util.List;
-
 public class IGDBConnection extends DataConnection{
 
     public static void startConnection(){

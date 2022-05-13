@@ -35,7 +35,6 @@ public class SceneController {
         stage.setMaximized(maximizar);
         //stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, SceneController::confirmarSalir);
     }
-/*+nameFile + ".fxml"*/
 
     //APP--------------
     public static void sceneApp() throws IOException {

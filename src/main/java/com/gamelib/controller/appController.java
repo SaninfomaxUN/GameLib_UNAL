@@ -3,7 +3,10 @@ package com.gamelib.controller;
 import com.api.igdb.exceptions.RequestException;
 import com.gamelib.Data.OperationsDB.STEAMOperations;
 import com.gamelib.Data.dataTemp;
+import com.gamelib.Logic.Structures.DynamicArray;
+import com.gamelib.Logic.Structures.LinkedListSimple;
 import com.gamelib.Logic.Structures.Queue;
+import com.gamelib.Logic.Structures.Stack;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -105,10 +108,25 @@ public class appController implements Initializable, Serializable {
 
     private void completarCombobox(Queue<Game> filaResultados) {
         ComboBox_Resultados.getItems().clear();
+        //long startTime = System.nanoTime();
         Queue<Game> fila = SerializationUtils.clone(filaResultados);
+            //Stack<Game> pilaPrueba = new Stack<>();
         while(!fila.isEmpty()){
             ComboBox_Resultados.getItems().add(fila.dequeue().getName());
+                //pilaPrueba.push(juego);
         }
+        //long endTime = System.nanoTime() - startTime;
+        // System.out.println("Tiempo de ejecución de Eliminar - Cola: "+endTime);
+
+        //-----------Pruebas----------------------------------
+        /*long startTime = System.nanoTime();
+        while(!pilaPrueba.isEmpty()){
+            pilaPrueba.pop();
+        }
+        long endTime = System.nanoTime() - startTime;
+
+        System.out.println("Tiempo de ejecución de Pop - Stack: "+endTime);*/
+
     }
 
     private void habilitarCamposSeleccJuego(boolean habilitar){

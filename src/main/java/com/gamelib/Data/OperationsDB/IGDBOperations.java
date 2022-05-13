@@ -4,7 +4,11 @@ import com.api.igdb.apicalypse.APICalypse;
 import com.api.igdb.exceptions.RequestException;
 import com.api.igdb.request.IGDBWrapper;
 import com.api.igdb.request.ProtoRequestKt;
+import com.gamelib.Logic.Structures.DynamicArray;
+import com.gamelib.Logic.Structures.LinkedListSimple;
 import com.gamelib.Logic.Structures.Queue;
+import com.gamelib.Logic.Structures.Stack;
+import org.apache.commons.lang3.SerializationUtils;
 import proto.Game;
 
 import java.util.List;
@@ -14,7 +18,7 @@ public class IGDBOperations implements APIOperations{
 
     //-----------------------BUSQUEDA -----------------------------------------------------
     public Queue<Game> buscarJuegoBase(String nameGame) throws RequestException {
-        APICalypse apicalypse = new APICalypse().fields("name").search(nameGame).where("category = 0 & version_parent = null").limit(200);
+        APICalypse apicalypse = new APICalypse().fields("name").search(nameGame)/*.where("category = 0 & version_parent = null")*/.limit(500);
         Game[] arrayResultados = convertirLista(ProtoRequestKt.games(IGDBWrapper.INSTANCE, apicalypse));
         Queue<Game> filaResultados = extraerConsulta(arrayResultados);
 
@@ -38,9 +42,23 @@ public class IGDBOperations implements APIOperations{
     }
     public Queue<Game> extraerConsulta(Game[] listToExtract){
         Queue<Game> filaResultados = new Queue<>();
-       for (Game juegoExtr:listToExtract){
-           filaResultados.enqueue(juegoExtr);
-       }
+
+        //long startTime = System.nanoTime();
+        for (Game juegoExtr:listToExtract){
+            filaResultados.enqueue(juegoExtr);
+        }
+        //long endTime = System.nanoTime() - startTime;
+       // System.out.println("Tiempo de ejecución de Insertar - Cola: "+endTime);
+
+        //-----------Pruebas----------------------------------
+        /*long startTime = System.nanoTime();
+        Stack<Game> pilaPrueba = new Stack<>();
+        for (Game juegoExtr:listToExtract){
+            pilaPrueba.push(juegoExtr);
+        }
+        long endTime = System.nanoTime() - startTime;
+        System.out.println("Tiempo de ejecución de Push - Stack: "+endTime);*/
+
       return filaResultados;
     }
 

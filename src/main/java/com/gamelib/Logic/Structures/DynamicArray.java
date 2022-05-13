@@ -24,7 +24,7 @@ public class DynamicArray<T> {
             }
             size = size*2;
             array = temp;
-            System.out.println("the array has grown in size");
+            //System.out.println("the array has grown in size");
         }
     }
 
@@ -89,6 +89,9 @@ public class DynamicArray<T> {
         array = temp;
         usedSpace--;
         return temp2;
+    }
+    public int isEmpty(){
+        return usedSpace;
     }
 
     public void print(){

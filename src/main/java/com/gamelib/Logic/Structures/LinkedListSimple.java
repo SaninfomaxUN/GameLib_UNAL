@@ -12,7 +12,9 @@ public class LinkedListSimple<T> implements Serializable {
     }
 
     public void addInicio(T elemento){
-        if (primerNodo.getSig()==null){
+        if (primerNodo==null){
+            ultimoNodo = null;
+        }else if (primerNodo.getSig()==null){
             ultimoNodo = primerNodo;
         }
         Nodo nuevo = new Nodo (elemento, primerNodo);
