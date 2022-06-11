@@ -3,10 +3,7 @@ package com.gamelib.controller;
 import com.api.igdb.exceptions.RequestException;
 import com.gamelib.Data.OperationsDB.STEAMOperations;
 import com.gamelib.Data.dataTemp;
-import com.gamelib.Logic.Structures.DynamicArray;
-import com.gamelib.Logic.Structures.LinkedListSimple;
 import com.gamelib.Logic.Structures.Queue;
-import com.gamelib.Logic.Structures.Stack;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +19,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import org.apache.commons.lang3.SerializationUtils;
 
-public class appController implements Initializable, Serializable {
+public class appController2 implements Initializable, Serializable {
     @FXML
     private TextField TextField_busqueda;
     @FXML
@@ -41,6 +38,8 @@ public class appController implements Initializable, Serializable {
     private Label label_Steam;
     @FXML
     private Button btn_Steam;
+
+    private static STEAMOperations steam = new STEAMOperations();
 
 
 
@@ -80,9 +79,12 @@ public class appController implements Initializable, Serializable {
     private void buscarJuegoAPIbyId(int idGame) throws RequestException {
         juegoSeleccionado = dataTemp.getAPI().buscarJuegoById(idGame);
 
-        imprimirJuego();
+        //imprimirJuego();
         label_Steam.setText("Desea abrir " + juegoSeleccionado.getName() + " en STEAM?");
         habilitarCamposAbrirJuego(true);
+
+
+        steam.addGame(juegoSeleccionado.getName());
     }
 
     private void imprimirJuego() {
@@ -108,9 +110,9 @@ public class appController implements Initializable, Serializable {
 
     private void completarCombobox(Queue<Game> filaResultados) {
         ComboBox_Resultados.getItems().clear();
-        //long startTime = System.nanoTime();
         Queue<Game> fila = SerializationUtils.clone(filaResultados);
-            //Stack<Game> pilaPrueba = new Stack<>();
+        //long startTime = System.nanoTime();
+        //Stack<Game> pilaPrueba = new Stack<>();
         while(!fila.isEmpty()){
             ComboBox_Resultados.getItems().add(fila.dequeue().getName());
                 //pilaPrueba.push(juego);
@@ -141,10 +143,7 @@ public class appController implements Initializable, Serializable {
 
     @FXML
     private void runGameBySteam(ActionEvent actionEvent) {
-        STEAMOperations steam = new STEAMOperations();
-        steam.addGame(juegoSeleccionado.getName());
         //steam.showGames();
-        //steam.deleteGame(1); //
         steam.runGame(juegoSeleccionado.getName());
         System.out.println("Ejecutando " + juegoSeleccionado.getName() + " en Steam..." );
     }

@@ -2,6 +2,8 @@ package com.gamelib.Data.OperationsDB;
 
 import com.api.igdb.exceptions.RequestException;
 import com.gamelib.Logic.Model.Videojuego;
+import com.gamelib.Logic.Structures.AvlTree;
+import com.gamelib.Logic.Structures.DynamicArray;
 import com.gamelib.Logic.Structures.Queue;
 import proto.Game;
 
@@ -11,13 +13,13 @@ public class STEAMOperations implements APIOperations {
 
 
     private int numberOfGames;
-    private Videojuego [] listOfGames;
+    //private Videojuego [] listOfGames;
 
-    public STEAMOperations(){
+    /*public STEAMOperations(){
         this.numberOfGames = 0;
         this.listOfGames = new Videojuego[100];
 
-    }
+    }*/
 
     @Override
     public Queue<Game> buscarJuegoBase(String nameGame) throws RequestException {
@@ -29,6 +31,8 @@ public class STEAMOperations implements APIOperations {
         return null;
     }
 
+    /*@Override
+    public void runGame(String nameGame) {}
     @Override
     public void runGame(String nameGame) {
         Videojuego run = null;
@@ -79,6 +83,53 @@ public class STEAMOperations implements APIOperations {
             String y = String.valueOf(i+1);
             System.out.println(y + ". " + listOfGames[i]);
         }
+    }*/
+
+
+    //---------------------------------------------------
+    public STEAMOperations(){
+        this.numberOfGames = 0;
+        this.listOfGames = new AvlTree();
+        this.listArray = new DynamicArray<>();
+
     }
+
+    public void runGame(String nameGame) {
+        //showGames();
+        //String listFinal [] = (String[]) listArray.getArray();
+        //String id = listFinal[index];
+
+        String id = ((Videojuego)(listOfGames.get(new Videojuego(nameGame,false)).element)).getID();
+
+        try {
+            ProcessBuilder builder = new ProcessBuilder(
+                    "cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + id);
+            builder.redirectErrorStream(false);
+            Process p = builder.start();
+
+            p.destroy();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void addGame(String game){
+        Videojuego newGame = new Videojuego(game, true);
+        listOfGames.insert(newGame);
+        numberOfGames++;
+    }
+    public void deleteGame(String game){
+        listOfGames.remove(game);
+
+        numberOfGames--;
+
+    }
+    /*public void showGames(){
+        listOfGames.inOrden();
+        listArray = listOfGames.getList();
+    }*/
+    private AvlTree listOfGames;
+    private DynamicArray listArray;
+    private Videojuego lastGame;
 
 }

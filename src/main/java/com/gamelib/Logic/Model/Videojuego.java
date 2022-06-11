@@ -1,17 +1,30 @@
 package com.gamelib.Logic.Model;
 
-import com.gamelib.controller.SceneController;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Videojuego {
-    private String name;
-    private String iD;
+public class Videojuego implements Comparable<Videojuego>  {
+    private String Name;
+    private String ID;
+    private String Platform;
 
-    public Videojuego(String name) {
-        this.name = name;
+
+    public Videojuego(String name, boolean findID, String platform) {
+        this(name, findID);
+        this.Platform = platform;
+
+
+    }
+    public Videojuego(String name, boolean findID) {
+        this.Name = name;
+        if(findID){
+            this.ID = getID(name);
+        }
+
+    }
+
+    public String getID(String name){
         File file = new File("U:\\OneDrive - Universidad Nacional de Colombia\\Semestre IV\\Estruc_Datos\\Proyecto\\Codigo_Fuente\\GameLib\\src\\main\\resources\\com\\gamelib\\Logic\\Model\\appid.txt");
         System.out.println(file.exists());
 
@@ -25,27 +38,32 @@ public class Videojuego {
                     String [] lastLineArray = lastLine.split(" ");
                     lastLine = lastLineArray[lastLineArray.length -1];
                     lastLine = lastLine.substring(0, lastLine.length()-1);
-                    this.iD = lastLine;
+                    return(lastLine);
                 }
                 lastLine = line;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
+
     public String getName(){
-        return name;
+        return Name;
     }
 
     public String getID(){
-        return iD;
+        return ID;
     }
 
     public String toString(){
         return "Game : " + getName() + ", ID: " + getID();
     }
 
-
+    @Override
+    public int compareTo(Videojuego o) {
+        return this.getName().compareTo(o.getName());
+    }
 }
 

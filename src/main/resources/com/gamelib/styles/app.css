@@ -1,10 +1,19 @@
-#btn_Steam{
-    -fx-font-size: 12;
-    -fx-background-image: url("/com/gamelib/assets/steam.png");
-    -fx-background-size: 30px 30px;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-cursor: HAND;
-    -fx-border-color: #53b5cd;
-    -fx-border-width: 3px;
+/* Styles of Main Screen*/
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.scroll-pane {
+    -fx-background-color: black;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+.menu .label{
+    -fx-text-fill: #ffcb0e;
 }

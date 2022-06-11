@@ -90,6 +90,10 @@ public class DynamicArray<T> {
         usedSpace--;
         return temp2;
     }
+
+    public T[] getArray() {
+        return array;
+    }
     public int isEmpty(){
         return usedSpace;
     }

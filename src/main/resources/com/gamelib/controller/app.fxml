@@ -1,27 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="498.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamelib.controller.appController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-   <Label text="Por favor ingrese el juego que desea buscar:" />
-   <TextField fx:id="TextField_busqueda" alignment="CENTER" prefHeight="31.0" prefWidth="419.0" stylesheets="@../styles/app.css" />
-   <Button fx:id="btnBuscar" onAction="#buscarJuegosAPI" text="Buscar" />
-   <Label fx:id="label_ComboBox" text="Selecciona tu juego de la lista:" />
-   <ComboBox fx:id="ComboBox_Resultados" prefHeight="29.0" prefWidth="315.0" />
-   <Label fx:id="label_Metadatos" prefHeight="39.0" prefWidth="336.0" text="En la consola encontrará los Metadatos del juego seleccionado!" textAlignment="CENTER" textFill="RED" underline="true" wrapText="true" />
-   <HBox fx:id="Hbox_Steam" alignment="CENTER" spacing="30.0">
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <MenuBar styleClass="fondoNegro" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Close" />
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Save As…" />
+            <MenuItem mnemonicParsing="false" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.2505567928730512, 0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" styleClass="fondoNegro" VBox.vgrow="ALWAYS">
+      <items>
+            <!--<VBox maxWidth="-Infinity" minWidth="200.0" prefWidth="320.0" styleClass="fondoNegro">
+               <children>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefWidth="-1.0" style="&#10;" text="Acceso Rapido" textAlignment="CENTER" wrapText="false">
+                     <textFill>
+                        <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
+                     </textFill>
+                     <font>
+                        <Font size="18.0" fx:id="x11" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>-->
+        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="-1.0" prefWidth="-1.0">
+          <content>
+                  <VBox>
+                     <children>
+                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="&#10;" styleClass="textoAmarillo" text="Mi Biblioteca" textAlignment="CENTER" wrapText="false" VBox.vgrow="ALWAYS">
+                           <textFill>
+                      <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
+                           </textFill>
+                           <font>
+                      <Font size="18.0" fx:id="x1" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+          </content>
+        </ScrollPane>
+            <VBox maxWidth="-Infinity" minWidth="200.0" prefWidth="320.0">
+               <children>
+            <Label alignment="CENTER" font="$x1" maxWidth="1.7976931348623157E308" style="&#10;" text="Opciones" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+               </children>
+            </VBox>
+      </items>
+    </SplitPane>
+    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" styleClass="fondoNegro" VBox.vgrow="NEVER">
       <children>
-         <Label fx:id="label_Steam" minHeight="-Infinity" minWidth="-Infinity" text="Desea abrir el juego seleccionado en STEAM?" textAlignment="CENTER" wrapText="true" />
-         <Button fx:id="btn_Steam" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#runGameBySteam" prefHeight="36.0" prefWidth="60.0" text="Abrir" />
+        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+          <font>
+            <Font size="11.0" fx:id="x3" />
+          </font>
+          <textFill>
+            <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+          </textFill>
+        </Label>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
       </children>
-   </HBox>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+  </children>
+   <stylesheets>
+      <URL value="@../styles/app.css" />
+      <URL value="@../styles/base.css" />
+   </stylesheets>
 </VBox>

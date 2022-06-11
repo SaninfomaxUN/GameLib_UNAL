@@ -21,7 +21,7 @@ public class SceneController {
         if(stage == null){
             stage = new Stage();
         }
-        root = FXMLLoader.load(SceneController.class.getResource("app.fxml"));
+        root = FXMLLoader.load(SceneController.class.getResource(nameFile+".fxml"));
         stage.setTitle("GameLib");
         //stage.getIcons().add(details.getIconAPP());
         if(scene == null){
@@ -29,7 +29,7 @@ public class SceneController {
         }else{
             scene.setRoot(root);
         }
-        scene.getStylesheets().add(SceneController.class.getResource("/com/gamelib/styles/app.css").toExternalForm());
+        //scene.getStylesheets().add(SceneController.class.getResource("/com/gamelib/styles/base.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         stage.setMaximized(maximizar);
@@ -38,7 +38,9 @@ public class SceneController {
 
     //APP--------------
     public static void sceneApp() throws IOException {
-        crearScene("app",false);
+        crearScene("app2",false);
     }
+
+
 }
 
