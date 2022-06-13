@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="VBoxAdd" alignment="CENTER" prefHeight="476.0" prefWidth="543.0" spacing="20.0" styleClass="fondoNegro" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gamelib.controller.addGameController">
+   <Label text="Por favor ingrese el juego que desea agregar:" />
+   <HBox alignment="CENTER">
+      <children>
+         <TextField fx:id="TextField_busqueda" alignment="CENTER" prefHeight="31.0" prefWidth="270.0" stylesheets="@../styles/base.css" />
+      </children>
+   </HBox>
+   <Button fx:id="btnBuscar" onAction="#buscarJuegosAPI" prefHeight="31.0" prefWidth="64.0" text="Buscar" />
+   <Label fx:id="label_ComboBoxResultados" text="Selecciona tu juego de la lista:" />
+   <ComboBox fx:id="ComboBox_Resultados" prefHeight="30.0" prefWidth="308.0" />
+   <Label fx:id="label_ComboBoxPlataforma" text="Selecciona tu Plataforma:" />
+   <ComboBox fx:id="ComboBox_Plataforma" prefHeight="30.0" prefWidth="313.0" />
+   <Button fx:id="btn_Save" mnemonicParsing="false" onAction="#addGameToLibrary" prefHeight="34.0" prefWidth="75.0" text="Guardar" />
+   <stylesheets>
+      <URL value="@../styles/app.css" />
+      <URL value="@../styles/base.css" />
+      <URL value="@../styles/appAdd.css" />
+   </stylesheets>
+</VBox>

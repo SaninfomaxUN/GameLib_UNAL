@@ -45,10 +45,9 @@ public class LinkedListSimple<T> implements Serializable {
     }
     public T remove(T elementoBorrar){
         T coincidencia = null;
-        if (primerNodo == null)
+        if (primerNodo == null) {
             System.out.println("Lista enlazada vacía");
-
-        else if (primerNodo.getElemento().equals(elementoBorrar)){
+        }else if (primerNodo.getElemento().equals(elementoBorrar)){
             primerNodo = primerNodo.getSig();
             numNodos--;
         }
@@ -60,7 +59,7 @@ public class LinkedListSimple<T> implements Serializable {
 
 
             if (actual.getSig()== null ){
-                System.out.println ("Elemento "+elementoBorrar+" no esta en la lista");
+                //System.out.println ("Elemento "+elementoBorrar+" no esta en la lista");
             }
             else{
                 coincidencia = (T) actual.getSig().getElemento();

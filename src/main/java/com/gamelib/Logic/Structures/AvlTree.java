@@ -1,14 +1,22 @@
 package com.gamelib.Logic.Structures;
 
 
-public class AvlTree<T extends Comparable<? super T>> {
+import org.apache.commons.lang3.SerializationUtils;
 
+import java.io.Serializable;
 
-    public static class  AvlNode<T> {
+public class AvlTree<T extends Comparable<? super T>> implements Serializable {
+
+    public static int numNodos = 0;
+
+    public static class  AvlNode<T> implements Serializable{
         public T element;
         AvlNode<T> left;
         AvlNode<T> right;
         int height;
+
+
+
         public AvlNode(T x, AvlNode<T> left, AvlNode<T> right) {
             this.element = x;
             this.left = left;
@@ -18,12 +26,14 @@ public class AvlTree<T extends Comparable<? super T>> {
     }
     private AvlNode<T> root;
 
-    private DynamicArray arrayList;
+    private DynamicArray<T> arrayList;
 
+    private Class<T> classType;
 
-    public AvlTree(){
+    public AvlTree(Class<T> classType_){
         root = null;
-        arrayList = new DynamicArray<>();
+        classType = classType_;
+        arrayList = new DynamicArray<>(classType);
     }
 
     public void makeEmpty(){
@@ -43,6 +53,13 @@ public class AvlTree<T extends Comparable<? super T>> {
         t.height = maxHeight + 1;
 
         return t;
+    }
+    public void updateNumNodos(boolean tipo){
+        if (tipo){
+            numNodos++;
+        }else {
+            numNodos--;
+        }
     }
 
     private int height(AvlNode<T> t){
@@ -114,6 +131,7 @@ public class AvlTree<T extends Comparable<? super T>> {
 
     public void insert(T x){
         root = insert (x, root);
+        updateNumNodos(true);
     }
 
     private AvlNode<T> insert (T x, AvlNode<T> t) {
@@ -136,6 +154,7 @@ public class AvlTree<T extends Comparable<? super T>> {
     }
     public void remove(T x){
         root = remove(x, root);
+        updateNumNodos(false);
     }
 
     private AvlNode<T> remove(T x, AvlNode<T> t){
@@ -184,8 +203,15 @@ public class AvlTree<T extends Comparable<? super T>> {
             return true;}
     }
 
-    public AvlNode<T> get(T x){
-        return get(x, root);
+    public T get(T x){
+        try{
+            T obj = (T) get(x, root).element;
+            return obj;
+        }catch (NullPointerException er){
+            return null;
+        }
+
+
     }
     
     private AvlNode<T> get (T x, AvlNode<T> t){
@@ -201,26 +227,6 @@ public class AvlTree<T extends Comparable<? super T>> {
         }
     }
 
-    public T searchByAttribute( T x) {
-        return searchByAttribute(x, root);
-    }
-
-    private T searchByAttribute(T x, AvlNode<T> t)
-    {
-        if (t == null){
-            return null;
-        }
-        int compareResult = x.compareTo(t.element);
-        if( compareResult < 0) {
-            return searchByAttribute(x, t.left);
-        }
-        else if (compareResult > 0) {
-            return searchByAttribute(x, t.right);
-        }
-        else{
-
-            return t.element;}
-    }
 
 
     public void inOrden(){
@@ -235,6 +241,7 @@ public class AvlTree<T extends Comparable<? super T>> {
 
         inOrden(t.left);
         System.out.println(t.element+" ");
+        arrayList.add(t.element);
 
         inOrden(t.right);
 
@@ -244,7 +251,10 @@ public class AvlTree<T extends Comparable<? super T>> {
 
     public DynamicArray<T> getList(){
         inOrden();
-        return this.arrayList;
+        DynamicArray<T> copyArrayList = SerializationUtils.clone(arrayList);
+        arrayList = new DynamicArray<>(classType);
+        return copyArrayList;
+
     }
 }
 

@@ -2,15 +2,17 @@ package com.gamelib.Data.OperationsDB;
 
 
 import com.api.igdb.exceptions.RequestException;
+import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.Queue;
-import proto.Game;
 
 public interface APIOperations {
 
     //Metodos/Operaciones a realizar con las API
-    Queue<Game> buscarJuegoBase(String nameGame) throws RequestException;
+    Queue<Videojuego> buscarJuegosBase(String nameGame) throws RequestException;
 
-    Game buscarJuegoById(int idGame) throws RequestException;
+    Videojuego buscarJuegoById(String idGame, String campos) throws RequestException;
 
-    void runGame(String nameGame);
+    Videojuego buscarJuegoByName(String nameGame) throws RequestException;
+
+    void runGame(Videojuego gameToRun);
 }

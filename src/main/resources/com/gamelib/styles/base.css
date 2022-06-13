@@ -1,20 +1,33 @@
-#btn_Steam{
+/*#btn_Steam{
     -fx-font-size: 12;
-    -fx-background-image: url("/com/gamelib/assets/steam.png");
+    -fx-background-image: url("/com/gamelib/Logic/Model/Steam.png");
     -fx-background-size: 30px 30px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-cursor: HAND;
-    -fx-border-color: #53b5cd;
+    -fx-border-color: #131313;
     -fx-border-width: 3px;
+}*/
+
+.mainTitle{
+    -fx-font-family: "Harlow Solid Italic";
+    -fx-font-size: 70;
+}
+.outline.label .text {
+    -fx-fill: #ffcb0e;
+    -fx-stroke: #2f2f2f;
+    -fx-stroke-width: 2px;
 }
 
 /* Main Colors*/
 .fondoNegro{
-    -fx-background-color: #000000;
+    -fx-background-color: #131313;
 }
 .fondoAmarillo{
     -fx-background-color: #ffcb0e;
+}
+.fondoGris{
+    -fx-background-color: #9a9797;
 }
 
 .textoNegro{

@@ -1,135 +1,125 @@
 package com.gamelib.Data.OperationsDB;
 
-import com.api.igdb.exceptions.RequestException;
+import com.gamelib.Data.Saved.localData;
 import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.AvlTree;
-import com.gamelib.Logic.Structures.DynamicArray;
 import com.gamelib.Logic.Structures.Queue;
-import proto.Game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Scanner;
 
-public class STEAMOperations implements APIOperations {
+public class STEAMOperations implements APIOperations, Serializable {
 
-
-    private int numberOfGames;
-    //private Videojuego [] listOfGames;
-
-    /*public STEAMOperations(){
-        this.numberOfGames = 0;
-        this.listOfGames = new Videojuego[100];
-
-    }*/
-
-    @Override
-    public Queue<Game> buscarJuegoBase(String nameGame) throws RequestException {
-        return null;
-    }
-
-    @Override
-    public Game buscarJuegoById(int idGame) throws RequestException {
-        return null;
-    }
-
-    /*@Override
-    public void runGame(String nameGame) {}
-    @Override
-    public void runGame(String nameGame) {
-        Videojuego run = null;
-        for (int i = 0;i< listOfGames.length;i++){
-            if (listOfGames[i].getName().equalsIgnoreCase(nameGame)){
-                run = listOfGames[i];
-                break;
-            }
-        }
-        String id = run.getID();
-        try {
-            ProcessBuilder builder = new ProcessBuilder(
-                    "cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + id);
-            builder.redirectErrorStream(false);
-            Process p = builder.start();
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-    public void addGame(String game){
-        Videojuego newGame = new Videojuego(game);
-        listOfGames[numberOfGames] = newGame;
-        numberOfGames++;
-    }
-
-    public void deleteGame(int index){
-        Videojuego []  temp = new Videojuego[100];
-        Videojuego temp2 = null;
-        for (int i = 0; i < numberOfGames; i++){
-            if (i < index){
-                temp[i] = listOfGames[i];
-            }else if (i == index){
-                temp2 = listOfGames[i];
-                temp[i] = listOfGames[i+1];
-            }
-        }
-
-        System.out.println("Game deleted: " + temp2);
-        listOfGames = temp;
-        numberOfGames--;
-        showGames();
-    }
-
-    public void showGames(){
-        for (int i = 0; i < numberOfGames; i++){
-            String y = String.valueOf(i+1);
-            System.out.println(y + ". " + listOfGames[i]);
-        }
-    }*/
-
+    private static AvlTree<Videojuego> steamTreeGames = new AvlTree(Videojuego.class);
+    private Videojuego GameSelected;
+    private static final String nameFileData = "SteamDATA";
 
     //---------------------------------------------------
-    public STEAMOperations(){
-        this.numberOfGames = 0;
-        this.listOfGames = new AvlTree();
-        this.listArray = new DynamicArray<>();
 
+    @Override
+    public Queue<Videojuego> buscarJuegosBase(String nameGame) {
+        GameSelected = new Videojuego(nameGame, "Steam");
+        Queue<Videojuego> filaResultados = new Queue<>();
+        filaResultados.enqueue(steamTreeGames.get(GameSelected));
+        return filaResultados;
     }
 
-    public void runGame(String nameGame) {
-        //showGames();
-        //String listFinal [] = (String[]) listArray.getArray();
-        //String id = listFinal[index];
+    @Override
+    public Videojuego buscarJuegoById(String idGame, String campos) {
 
-        String id = ((Videojuego)(listOfGames.get(new Videojuego(nameGame,false)).element)).getID();
+        return null;
+    }
 
+    @Override
+    public Videojuego buscarJuegoByName(String nameGame) {
+        GameSelected = new Videojuego(nameGame);
+        Videojuego coincidencia = steamTreeGames.get(GameSelected);
+        if(coincidencia == null){
+            return GameSelected;
+        }
+        return coincidencia;
+    }
+
+    private String searchIdInFileSteam(String name){
         try {
-            ProcessBuilder builder = new ProcessBuilder(
-                    "cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + id);
-            builder.redirectErrorStream(false);
-            Process p = builder.start();
+            Scanner scanner = new Scanner(readFile());
+            String lastLine = null;
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                line = line.replace("™", "");
+                if (line.contains("\"" + name + "\"")) {
+                    String [] lastLineArray = lastLine.split(" ");
+                    lastLine = lastLineArray[lastLineArray.length -1];
+                    lastLine = lastLine.substring(0, lastLine.length()-1);
+                    return(lastLine);
+                }
+                lastLine = line;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            p.destroy();
+    public void runGame(Videojuego gameToRun) {
+        try {
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + /*searchIdInFileSteam(nameGame)*/ gameToRun.getIDPlatform());
+            builder.redirectErrorStream(true);
+            Process p = builder.start();
+            //p.destroy();
         } catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public void addGame(String game){
-        Videojuego newGame = new Videojuego(game, true);
-        listOfGames.insert(newGame);
-        numberOfGames++;
+    public static void reloadTree() throws IOException, ClassNotFoundException {
+        steamTreeGames = localData.loadTree(nameFileData);
+        System.out.println("Arbol correctamente Cargado!");
     }
-    public void deleteGame(String game){
-        listOfGames.remove(game);
 
-        numberOfGames--;
+    public static void saveTreeReloaded() throws IOException {
+        steamTreeGames = new AvlTree<>(Videojuego.class);
+        try {
+            Scanner scanner = new Scanner(readFile());
+            String idLastLine = "PRUEBA 1";
+
+            while (scanner.hasNextLine()) {
+                String title = scanner.nextLine();
+                title = title.replace("™", "");
+                title = title.replace(":", "");
+                if(title.contains("\"name\"")){
+                    String [] idLineArray = idLastLine.split(" ");
+                    idLastLine = idLineArray[idLineArray.length -1];
+                    idLastLine = idLastLine.substring(0, idLastLine.length()-1);
+
+                    String [] lineArrayName = title.split("\"");
+                    title = lineArrayName [lineArrayName.length -1];
+                    steamTreeGames.insert(new Videojuego(title.trim(),"Steam",idLastLine));
+                }
+                idLastLine = title;
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        localData.saveTree(steamTreeGames,nameFileData);
 
     }
-    /*public void showGames(){
-        listOfGames.inOrden();
-        listArray = listOfGames.getList();
-    }*/
-    private AvlTree listOfGames;
-    private DynamicArray listArray;
-    private Videojuego lastGame;
+
+
+    public void showGames(){
+        //steamTreeGames.inOrden();
+    }
+
+
+    private static File readFile(){
+        File steamFile = new File("U:\\OneDrive - Universidad Nacional de Colombia\\Semestre IV\\Estruc_Datos\\Proyecto\\Codigo_Fuente\\GameLib\\src\\main\\resources\\com\\gamelib\\Logic\\Model\\appid.txt");
+        //System.out.println(steamFile.exists());
+        return steamFile;
+    }
+
 
 }

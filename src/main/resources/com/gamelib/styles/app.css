@@ -1,10 +1,21 @@
 /* Styles of Main Screen*/
-
+.menu-bar {
+    -fx-selection-bar:  #131313;
+    -fx-border-color:  #131313;
+    -fx-focused-text-base-color: #131313;
+    -fx-background-color: #131313 ;
+}
+.menu-item {
+    -fx-selection-bar:  #131313;
+    -fx-border-color:  #131313;
+    -fx-focused-text-base-color: #131313;
+    -fx-background-color: #131313 ;
+}
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
 .scroll-pane {
-    -fx-background-color: black;
+    -fx-background-color: #131313 ;
 }
 
 .split-pane:horizontal > .split-pane-divider {
@@ -17,3 +28,62 @@
 .menu .label{
     -fx-text-fill: #ffcb0e;
 }
+
+.VBoxGame{
+    -fx-alignment: TOP-CENTER;
+    -fx-background-color: black /* #131313#9a9797*/;
+    -fx-padding: 10 10 10 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: HAND;
+}
+
+.PictureGame{
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 10 10 10 10;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-pref-width: 200;
+    -fx-pref-height: 283;
+    -fx-background-size: stretch;
+}
+
+.HBoxOptions{
+    -fx-alignment: CENTER;
+    -fx-padding: 10 10 10 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-spacing: 40;
+}
+.LogoPlatform{
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-pref-width: 30;
+    -fx-pref-height: 30;
+    -fx-background-size: stretch;
+}
+
+.ComboboxGame{
+    -fx-background-color: #131313;
+    -fx-pref-width: 30;
+    -fx-border-color: #131313;
+}
+
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: white;
+    -fx-background-color: #131313;
+    -fx-border-color: #131313;
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+    -fx-border-color: black;
+}
+#btnAddGame{
+    -fx-background-color: #ffcb0e;
+    -fx-font-weight: bold;
+    -fx-font-size: 22;
+    -fx-cursor: HAND;
+}
+
+

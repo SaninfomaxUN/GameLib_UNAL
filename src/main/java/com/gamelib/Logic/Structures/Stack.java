@@ -1,6 +1,8 @@
 package com.gamelib.Logic.Structures;
 
-public class Stack<T> {
+import java.io.Serializable;
+
+public class Stack<T> implements Serializable {
     //--------------------Pila------------
 
     private LinkedListSimple<T> listaEnlaz;

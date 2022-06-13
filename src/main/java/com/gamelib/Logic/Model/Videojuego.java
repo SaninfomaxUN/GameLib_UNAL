@@ -1,69 +1,110 @@
 package com.gamelib.Logic.Model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import com.api.igdb.exceptions.RequestException;
+import com.gamelib.Data.OperationsDB.dataAPITemp;
+import proto.Game;
 
-public class Videojuego implements Comparable<Videojuego>  {
+import java.io.Serializable;
+
+public class Videojuego implements Comparable<Videojuego>, Serializable {
     private String Name;
-    private String ID;
+    private String IDPlatform;
     private String Platform;
+    private transient Game GameApi;
+
+    private String IDGameApi;
 
 
-    public Videojuego(String name, boolean findID, String platform) {
-        this(name, findID);
+    private String urlImage;
+
+
+    public Videojuego(Game gameApi) {
+        this(gameApi.getName(), "API", Long.toString(gameApi.getId()));
+        this.GameApi = gameApi;
+        this.IDGameApi = String.valueOf(gameApi.getId());
+    }
+    public Videojuego(String name, String platform, String iDPlatform) {
+        this(name,platform);
+        this.IDPlatform = iDPlatform;
+    }
+    public Videojuego(String name, String platform) {
+        this(name);
         this.Platform = platform;
-
-
     }
-    public Videojuego(String name, boolean findID) {
+    public Videojuego(String name) {
         this.Name = name;
-        if(findID){
-            this.ID = getID(name);
-        }
-
-    }
-
-    public String getID(String name){
-        File file = new File("U:\\OneDrive - Universidad Nacional de Colombia\\Semestre IV\\Estruc_Datos\\Proyecto\\Codigo_Fuente\\GameLib\\src\\main\\resources\\com\\gamelib\\Logic\\Model\\appid.txt");
-        System.out.println(file.exists());
-
-        try {
-            Scanner scanner = new Scanner(file);
-            String lastLine = null;
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (line.contains("\"" + name + "\"")) {
-
-                    String [] lastLineArray = lastLine.split(" ");
-                    lastLine = lastLineArray[lastLineArray.length -1];
-                    lastLine = lastLine.substring(0, lastLine.length()-1);
-                    return(lastLine);
-                }
-                lastLine = line;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 
-    public String getName(){
+
+//----------------- GET/SET ---------------
+    public String getName() {
         return Name;
     }
-
-    public String getID(){
-        return ID;
+    public void setIDPlatform(String IDPlatform) {
+        this.IDPlatform = IDPlatform;
+    }
+    public void setPlatform(String platform) {
+        Platform = platform;
+    }
+    public void setGameApi(Game gameApi) {
+        GameApi = gameApi;
     }
 
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public void setIDGameApi(String IDGameApi) {
+        this.IDGameApi = IDGameApi;
+    }
+
+
+    public String getIDPlatform() {
+        return IDPlatform;
+    }
+    public String getPlatform() {
+        return Platform;
+    }
+    public String getIDGameApi() {
+        return IDGameApi;
+    }
+
+    public Game getGameApi() throws RequestException {
+        if(GameApi==null){
+            GameApi = dataAPITemp.getAPI().buscarJuegoById(IDGameApi,"*").getGameApi();
+        }
+        return GameApi;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+
+
+
     public String toString(){
-        return "Game : " + getName() + ", ID: " + getID();
+        return "Game : " + getName() + ", ID: " + getIDPlatform();
     }
 
     @Override
-    public int compareTo(Videojuego o) {
-        return this.getName().compareTo(o.getName());
+    public int compareTo(Videojuego videojuego) {
+        String x = this.getName();
+        x = x.replace(":","");
+        x = x.replace("!","");
+        x = x.replace(".","");
+        x = x.toUpperCase();
+        String y = videojuego.getName();
+        y = y.replace(":","");
+        y = y.replace("!","");
+        y = y.replace(".","");
+        y = y.toUpperCase();
+        return x.compareTo(y);
     }
 }
 

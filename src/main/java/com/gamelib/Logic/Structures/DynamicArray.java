@@ -1,23 +1,26 @@
 package com.gamelib.Logic.Structures;
 
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class DynamicArray<T> {
+public class DynamicArray<T> implements Serializable {
     private int size;
     private int usedSpace;
     private T array[];
 
-    public DynamicArray(){
-        this.array = (T[]) new Object[4];
+    private Class<T> classType;
+
+    public DynamicArray(Class<T> classType_){
         this.usedSpace = 0;
         this.size = 2;
+        this.classType=classType_;
+        this.array = (T[])  Array.newInstance(classType, 4);
     }
 
     public void growSize(){
         if (usedSpace == size) {
-
-
-            T temp[] = (T[]) new Object[size*2];
+            T temp[] = (T[]) Array.newInstance(classType, size*2);
 
             for (int i = 0; i < size; i++) {
                 temp[i] = array[i];
@@ -37,7 +40,7 @@ public class DynamicArray<T> {
 
     public void add(T var, int index){
         growSize();
-        T temp[] = (T[])new Object[size];
+        T temp[] = (T[])Array.newInstance(classType, size);
 
         for (int i = 0; i < usedSpace; i++){
             if ( i < index){
@@ -56,7 +59,7 @@ public class DynamicArray<T> {
     }
 
     public T delete(){
-        T temp[] = (T[]) new Object[size];
+        T temp[] = (T[]) Array.newInstance(classType, size);
         T temp2 = null;
 
         for (int i = 0; i < usedSpace; i++){
@@ -72,7 +75,7 @@ public class DynamicArray<T> {
     }
 
     public T delete(int index){
-        T temp[] = (T[]) new Object[size];
+        T temp[] = (T[]) Array.newInstance(classType, size);
         T temp2 = null;
 
         for (int i = 0; i < usedSpace; i++){
@@ -94,14 +97,24 @@ public class DynamicArray<T> {
     public T[] getArray() {
         return array;
     }
-    public int isEmpty(){
-        return usedSpace;
+
+    public boolean isEmpty(){
+        if (usedSpace==0){
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public void print(){
-        T temp[] = (T[]) new Object[usedSpace];
+        T temp[] = (T[]) Array.newInstance(classType, usedSpace);
         for (int i = 0; i < usedSpace; i++)
             temp[i]  = array[i];
         System.out.println(Arrays.toString(temp));
+    }
+
+    public int getLength(){
+        return usedSpace;
     }
 }
