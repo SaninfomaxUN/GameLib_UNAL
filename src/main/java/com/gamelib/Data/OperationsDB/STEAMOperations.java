@@ -5,13 +5,12 @@ import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.AvlTree;
 import com.gamelib.Logic.Structures.Queue;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class STEAMOperations implements APIOperations, Serializable {
+
+
 
     private static AvlTree<Videojuego> steamTreeGames = new AvlTree(Videojuego.class);
     private Videojuego GameSelected;
@@ -43,7 +42,7 @@ public class STEAMOperations implements APIOperations, Serializable {
         return coincidencia;
     }
 
-    private String searchIdInFileSteam(String name){
+/*    private String searchIdInFileSteam(String name){
         try {
             Scanner scanner = new Scanner(readFile());
             String lastLine = null;
@@ -62,7 +61,7 @@ public class STEAMOperations implements APIOperations, Serializable {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     public void runGame(Videojuego gameToRun) {
         try {
@@ -76,11 +75,12 @@ public class STEAMOperations implements APIOperations, Serializable {
     }
 
     public static void reloadTree() throws IOException, ClassNotFoundException {
-        steamTreeGames = localData.loadTree(nameFileData);
-        System.out.println("Arbol correctamente Cargado!");
+        //steamTreeGames = localData.loadTree(nameFileData);
+        localData.loadSteamTree(nameFileData);
+        System.out.println("Arbol STEAM correctamente Cargado!");
     }
 
-    public static void saveTreeReloaded() throws IOException {
+    /*public static void saveTreeReloaded() throws IOException {
         steamTreeGames = new AvlTree<>(Videojuego.class);
         try {
             Scanner scanner = new Scanner(readFile());
@@ -107,7 +107,7 @@ public class STEAMOperations implements APIOperations, Serializable {
         }
         localData.saveTree(steamTreeGames,nameFileData);
 
-    }
+    }*/
 
 
     public void showGames(){
@@ -115,11 +115,21 @@ public class STEAMOperations implements APIOperations, Serializable {
     }
 
 
-    private static File readFile(){
+   /* private static File readFile(){
         File steamFile = new File("U:\\OneDrive - Universidad Nacional de Colombia\\Semestre IV\\Estruc_Datos\\Proyecto\\Codigo_Fuente\\GameLib\\src\\main\\resources\\com\\gamelib\\Logic\\Model\\appid.txt");
         //System.out.println(steamFile.exists());
         return steamFile;
+    }*/
+   public static AvlTree<Videojuego> getSteamTreeGames() {
+       return steamTreeGames;
+   }
+
+    public static void setSteamTreeGames(AvlTree<Videojuego> steamTreeGames) {
+        STEAMOperations.steamTreeGames = steamTreeGames;
     }
 
+    public static void insertSteamGame(Videojuego game){
+       steamTreeGames.insert(game);
+    }
 
 }

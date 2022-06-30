@@ -7,15 +7,13 @@ import proto.Game;
 import java.io.Serializable;
 
 public class Videojuego implements Comparable<Videojuego>, Serializable {
-    private String Name;
-    private String IDPlatform;
-    private String Platform;
+    public String Name;
+    public String IDPlatform;
+    public String Platform;
     private transient Game GameApi;
 
-    private String IDGameApi;
-
-
-    private String urlImage;
+    public String IDGameApi;
+    public String urlImage;
 
 
     public Videojuego(Game gameApi) {
@@ -98,11 +96,13 @@ public class Videojuego implements Comparable<Videojuego>, Serializable {
         x = x.replace(":","");
         x = x.replace("!","");
         x = x.replace(".","");
+        x = x.replace("™","");
         x = x.toUpperCase();
         String y = videojuego.getName();
         y = y.replace(":","");
         y = y.replace("!","");
         y = y.replace(".","");
+        y = y.replace("™","");
         y = y.toUpperCase();
         return x.compareTo(y);
     }

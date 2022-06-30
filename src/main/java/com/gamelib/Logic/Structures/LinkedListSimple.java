@@ -96,12 +96,12 @@ public class LinkedListSimple<T> implements Serializable {
     public void printLista(){
         Nodo actual = primerNodo;
         while (actual.getSig()!= null){
-            System.out.println(actual.getElemento());
+            //System.out.println(actual.getElemento());
 
             actual = actual.getSig();
 
         }
-        System.out.println(actual.getElemento());
+        //System.out.println(actual.getElemento());
     }
 }
 

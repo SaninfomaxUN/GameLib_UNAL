@@ -31,6 +31,10 @@ public class DynamicArray<T> implements Serializable {
         }
     }
 
+    public T get(int index){
+        return array[index];
+    }
+
     public void add(T var){
         growSize();
 

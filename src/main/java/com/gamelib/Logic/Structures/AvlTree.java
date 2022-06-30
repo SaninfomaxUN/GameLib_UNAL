@@ -240,7 +240,7 @@ public class AvlTree<T extends Comparable<? super T>> implements Serializable {
             return;
 
         inOrden(t.left);
-        System.out.println(t.element+" ");
+        //System.out.println(t.element+" ");
         arrayList.add(t.element);
 
         inOrden(t.right);
@@ -255,6 +255,9 @@ public class AvlTree<T extends Comparable<? super T>> implements Serializable {
         arrayList = new DynamicArray<>(classType);
         return copyArrayList;
 
+    }
+    public int getSpaceUsed(){
+        return arrayList.getLength();
     }
 }
 

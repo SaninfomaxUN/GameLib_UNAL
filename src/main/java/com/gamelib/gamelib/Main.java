@@ -13,6 +13,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
+
         dataAPITemp.startConectionAPI();
 
         SceneController.sceneApp();
@@ -32,6 +33,10 @@ public class Main extends Application {
         //STEAMOperations.saveTreeReloaded();
 
         userLibrary.loadUserLibrary();
+
+        //userLibrary.saveUserDataJson();
+
+
 
 
     }
