@@ -1,6 +1,6 @@
 package com.gamelib.Logic.Model;
 
-import com.gamelib.Data.Saved.userLibrary;
+import com.gamelib.Data.Saved.UserLibrary;
 import com.gamelib.controller.appController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -105,12 +105,11 @@ public class UIGame implements Comparable<UIGame>, Serializable {
     }
     private void addListenerComboBoxSettings(){
         GameSettings.setOnAction((event) -> {
-            //System.out.println(this.Game.getIDGameApi());
             if(GameSettings.getValue().equals("Eliminar")){
                 FlowPane node = (FlowPane) this.GameVBox.getParent();
                 node.getChildren().remove(this.GameVBox);
                 try {
-                    userLibrary.removeUIGame(this.Game);
+                    UserLibrary.removeUIGame(this.Game);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

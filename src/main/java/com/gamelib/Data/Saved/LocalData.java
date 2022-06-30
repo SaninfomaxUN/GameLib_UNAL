@@ -2,41 +2,25 @@ package com.gamelib.Data.Saved;
 
 import com.gamelib.Data.OperationsDB.STEAMOperations;
 import com.gamelib.Logic.Model.Videojuego;
-import com.gamelib.Logic.Structures.AvlTree;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
+public class LocalData implements Serializable{
 
-import com.google.gson.*;
-public class localData implements Serializable{
-
-    /*public static void saveTree(AvlTree<Videojuego> treeToSave, String nameDataSaved) throws IOException {
-        String fileName= nameDataSaved + ".txt";
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(treeToSave);
-        oos.close();
-    }*/
-
-    /*public static AvlTree<Videojuego> loadTree(String nameDataSaved) throws IOException, ClassNotFoundException {
-        String fileName= nameDataSaved + ".txt";
-        FileInputStream fin = new FileInputStream(fileName);
-        ObjectInputStream ois = new ObjectInputStream(fin);
-        new AvlTree<>(Videojuego.class);
-        AvlTree<Videojuego> treeToRead;
-        treeToRead = (AvlTree<Videojuego>) ois.readObject();
-        ois.close();
-        return treeToRead;
-    }*/
-    public static void loadSteamTree(String nameDataSaved) throws IOException, ClassNotFoundException {
-        String apiJsonStr = null;
+    public static void loadSteamTree() throws IOException {
+        String apiJsonStr;
         /*try{
             apiJsonStr = new Scanner(new URL("http://api.steampowered.com/ISteamApps/GetAppList/v0002/").openStream(), "UTF-8").useDelimiter("\\A").next();
         }catch (UnknownHostException e){
 
         }*/
-        Path filePath = Path.of("SteamAPI" + ".json");
+        Path filePath = Path.of(STEAMOperations.nameFileData);
         apiJsonStr = Files.readString(filePath);
 
         JsonObject gsonObjAppList = JsonParser.parseString(/*content*/apiJsonStr).getAsJsonObject();

@@ -4,7 +4,7 @@ import com.api.igdb.exceptions.RequestException;
 import com.gamelib.Data.OperationsDB.IGDBOperations;
 import com.gamelib.Data.OperationsDB.STEAMOperations;
 import com.gamelib.Data.OperationsDB.dataAPITemp;
-import com.gamelib.Data.Saved.userLibrary;
+import com.gamelib.Data.Saved.UserLibrary;
 import com.gamelib.Logic.Model.UIGame;
 import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.Queue;
@@ -122,7 +122,7 @@ public class addGameController implements Initializable, Serializable {
         SceneController.cerrarVentanaSecundaria();
     }
     private boolean comprobateRepeatGame(String nombreSelecc) throws IOException {
-        return userLibrary.constainsUIGame(new Videojuego(nombreSelecc));
+        return UserLibrary.constainsUIGame(new Videojuego(nombreSelecc));
     }
     private void createUIGame() throws RequestException, IOException {
         addPlatformData();
@@ -144,12 +144,11 @@ public class addGameController implements Initializable, Serializable {
         appController.addGame.set(true);
     }
     private void saveNewUIGame(Videojuego newUIGame) throws IOException {
-        userLibrary.addUIGame(newUIGame);
+        UserLibrary.addUIGame(newUIGame);
     }
 
     private String searchIDByPlatform(){
         String idPlatform = juegoSeleccionado.getIDGameApi();
-        STEAMOperations steam = new STEAMOperations();
         switch (juegoSeleccionado.getPlatform()){
             case "Steam":
                 Videojuego v = steam.buscarJuegoByName(juegoSeleccionado.getName());

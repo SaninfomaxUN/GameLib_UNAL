@@ -10,7 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class userLibrary implements Serializable{
+public class UserLibrary implements Serializable{
 
 
     private static AvlTree<Videojuego> gamesLibraryTree = new AvlTree<>(Videojuego.class);
@@ -18,16 +18,14 @@ public class userLibrary implements Serializable{
 
     public static void addUIGame(Videojuego game) throws IOException {
         gamesLibraryTree.insert(game);
-        //saveTree();
         saveUserDataJson();
     }
-    public static boolean constainsUIGame(Videojuego game) throws IOException {
+    public static boolean constainsUIGame(Videojuego game) {
         return gamesLibraryTree.contains(game);
     }
 
     public static void removeUIGame(Videojuego game) throws IOException {
         gamesLibraryTree.remove(game);
-        //saveTree();
         saveUserDataJson();
     }
 
@@ -46,13 +44,6 @@ public class userLibrary implements Serializable{
         }
     }
 
-   /* public static void saveTree() throws IOException {
-        String fileName= "dataSaved.txt";
-        FileOutputStream fos = new FileOutputStream(fileName);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(gamesLibraryTree);
-        oos.close();
-    }*/
 
     public static void saveUserDataJson() throws IOException {
         DynamicArray<Videojuego> dataUsergames = saveFromTree(); //----Save from Tree
@@ -69,15 +60,8 @@ public class userLibrary implements Serializable{
     }
 
 
-   /* public static void loadTree() throws IOException, ClassNotFoundException {
-        String fileName= "dataSaved.txt";
-        FileInputStream fin = new FileInputStream(fileName);
-        ObjectInputStream ois = new ObjectInputStream(fin);
-        gamesLibraryTree = (AvlTree<Videojuego>) ois.readObject();
-        ois.close();
-    }*/
 
-    public static void loadUserDataJson() throws IOException, ClassNotFoundException {
+    public static void loadUserDataJson() throws IOException {
         Path filePath = Path.of("dataSaved.json");
         String gamesJsonStr = Files.readString(filePath);
 
@@ -97,8 +81,7 @@ public class userLibrary implements Serializable{
     }
 
 
-    public static void loadUserLibrary() throws IOException, ClassNotFoundException {
-        //loadTree();
+    public static void loadUserLibrary() throws IOException {
         loadUserDataJson();
         listAllGames();
         readTree();
