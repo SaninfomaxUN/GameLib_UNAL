@@ -5,10 +5,12 @@ import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.AvlTree;
 import com.gamelib.Logic.Structures.DynamicArray;
 import com.gamelib.controller.appController;
+import com.gamelib.gamelib.Main;
 import com.google.gson.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
 
 public class UserLibrary implements Serializable{
 
@@ -47,12 +49,13 @@ public class UserLibrary implements Serializable{
 
     public static void saveUserDataJson() throws IOException {
         DynamicArray<Videojuego> dataUsergames = saveFromTree(); //----Save from Tree
-
         Gson gson = new Gson();
         FileWriter writeFile = new FileWriter("dataSaved.json");
         gson.toJson(dataUsergames.getArray(),writeFile);
         writeFile.flush();
         writeFile.close();
+
+
     }
 
     public static DynamicArray<Videojuego> saveFromTree(){
@@ -64,7 +67,6 @@ public class UserLibrary implements Serializable{
     public static void loadUserDataJson() throws IOException {
         Path filePath = Path.of("dataSaved.json");
         String gamesJsonStr = Files.readString(filePath);
-
         Gson gson = new Gson();
         Videojuego[] userVideoGames = gson.fromJson(gamesJsonStr,
                 Videojuego[].class);

@@ -2,7 +2,6 @@ package com.gamelib.Data.OperationsDB;
 
 import com.gamelib.Data.Saved.LocalData;
 import com.gamelib.Logic.Model.Videojuego;
-import com.gamelib.Logic.Structures.AvlTree;
 import com.gamelib.Logic.Structures.HashMapQuadratic;
 import com.gamelib.Logic.Structures.Queue;
 import com.gamelib.Logic.Tools.Comparator;
@@ -50,7 +49,7 @@ public class STEAMOperations implements APIOperations, Serializable {
     }
 
     public static void reloadTree() throws IOException {
-        LocalData.loadSteamTree();
+        LocalData.loadHashTree();
         System.out.println("Hash Map Quadratic STEAM correctamente Cargado ✅!");
     }
 
