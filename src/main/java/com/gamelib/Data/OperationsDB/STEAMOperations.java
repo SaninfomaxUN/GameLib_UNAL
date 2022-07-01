@@ -3,14 +3,18 @@ package com.gamelib.Data.OperationsDB;
 import com.gamelib.Data.Saved.LocalData;
 import com.gamelib.Logic.Model.Videojuego;
 import com.gamelib.Logic.Structures.AvlTree;
+import com.gamelib.Logic.Structures.HashMapQuadratic;
 import com.gamelib.Logic.Structures.Queue;
+import com.gamelib.Logic.Tools.Comparator;
 
 import java.io.IOException;
 import java.io.Serializable;
 
 public class STEAMOperations implements APIOperations, Serializable {
 
-    private static AvlTree<Videojuego> steamTreeGames = new AvlTree(Videojuego.class);
+    private static AvlTree<Videojuego> steamTreeGames = new AvlTree<>(Videojuego.class);
+
+    private static HashMapQuadratic<String, Videojuego> steamHashMapQGames = new HashMapQuadratic<>();
     private Videojuego GameSelected;
     public static final String nameFileData = "SteamAPI.json";
 
@@ -18,10 +22,11 @@ public class STEAMOperations implements APIOperations, Serializable {
 
     @Override
     public Queue<Videojuego> buscarJuegosBase(String nameGame) {
-        GameSelected = new Videojuego(nameGame, "Steam");
+        /*GameSelected = new Videojuego(nameGame, "Steam");
         Queue<Videojuego> filaResultados = new Queue<>();
         filaResultados.enqueue(steamTreeGames.get(GameSelected));
-        return filaResultados;
+        return filaResultados;*/
+        return null;
     }
 
     @Override
@@ -33,7 +38,8 @@ public class STEAMOperations implements APIOperations, Serializable {
     @Override
     public Videojuego buscarJuegoByName(String nameGame) {
         GameSelected = new Videojuego(nameGame);
-        Videojuego coincidencia = steamTreeGames.get(GameSelected);
+        //Videojuego coincidencia = steamTreeGames.get(GameSelected);
+        Videojuego coincidencia = steamHashMapQGames.getValue(Comparator.adaptString(GameSelected.getName()));
         if(coincidencia == null){
             return GameSelected;
         }
@@ -42,7 +48,7 @@ public class STEAMOperations implements APIOperations, Serializable {
 
     public void runGame(Videojuego gameToRun) {
         try {
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + /*searchIdInFileSteam(nameGame)*/ gameToRun.getIDPlatform());
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", "cd \"C:\\Users\" && start Steam://run/" + gameToRun.getIDPlatform());
             builder.redirectErrorStream(true);
             Process p = builder.start();
             //p.destroy();
@@ -53,7 +59,7 @@ public class STEAMOperations implements APIOperations, Serializable {
 
     public static void reloadTree() throws IOException {
         LocalData.loadSteamTree();
-        System.out.println("Arbol STEAM correctamente Cargado!");
+        System.out.println("Hash Map Quadratic STEAM correctamente Cargado!");
     }
 
     public void showGames(){
@@ -61,16 +67,12 @@ public class STEAMOperations implements APIOperations, Serializable {
     }
 
     //-------SET / GET / INSERT -----------------
-   public static AvlTree<Videojuego> getSteamTreeGames() {
-       return steamTreeGames;
-   }
 
-    public static void setSteamTreeGames(AvlTree<Videojuego> steamTreeGames) {
-        STEAMOperations.steamTreeGames = steamTreeGames;
-    }
-
-    public static void insertSteamGame(Videojuego game){
+    public static void insertSteamTreeGame(Videojuego game){
        steamTreeGames.insert(game);
     }
 
+    public static void insertSteamMapQGame(Videojuego game){
+        steamHashMapQGames.add(game.getName(), game);
+    }
 }

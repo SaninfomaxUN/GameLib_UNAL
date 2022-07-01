@@ -2,6 +2,7 @@ package com.gamelib.Data.Saved;
 
 import com.gamelib.Data.OperationsDB.STEAMOperations;
 import com.gamelib.Logic.Model.Videojuego;
+import com.gamelib.Logic.Tools.Comparator;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -31,12 +32,16 @@ public class LocalData implements Serializable{
             JsonObject gsonGame = gsonElementGame.getAsJsonObject();
             String name = gsonGame.get("name").getAsString();
             String appid = gsonGame.get("appid").getAsString();
-            insertInSteamTree(new Videojuego(name, "Steam", appid));//-----Insert in Steam Tree
+            //insertInSteamTree(new Videojuego(name, "Steam", appid));//-----Insert in Steam Tree
+            insertInSteamMapQuadratic(new Videojuego(Comparator.adaptString(name) , "Steam", appid));//-----Insert in Steam Map Quadratic
         }
     }
 
     public static void insertInSteamTree(Videojuego game){
-        STEAMOperations.insertSteamGame(game);
+        STEAMOperations.insertSteamTreeGame(game);
     }
 
+    public static void insertInSteamMapQuadratic(Videojuego game){
+        STEAMOperations.insertSteamMapQGame(game);
+    }
 }
