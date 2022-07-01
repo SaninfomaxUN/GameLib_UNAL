@@ -44,8 +44,7 @@ public class HashMapQuadratic<K, V> {
     // -------------------------
 
     // 20.14
-    public V add(K key, V value)
-    {
+    public V add(K key, V value) {
         V oldValue;
         if (isHashTableTooFull())
             rehash();
@@ -182,8 +181,9 @@ public class HashMapQuadratic<K, V> {
 
 
     public final void clear() {
-        for (int index = 0; index < hashTable.length; index++)
+        for (int index = 0; index < hashTable.length; index++){
             hashTable[index] = null;
+        }
 
         numberOfEntries = 0;
         locationsUsed = 0;

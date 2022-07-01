@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public class STEAMOperations implements APIOperations, Serializable {
-
-    private static AvlTree<Videojuego> steamTreeGames = new AvlTree<>(Videojuego.class);
-
     private static HashMapQuadratic<String, Videojuego> steamHashMapQGames = new HashMapQuadratic<>();
     private Videojuego GameSelected;
     public static final String nameFileData = "SteamAPI.json";
@@ -22,10 +19,6 @@ public class STEAMOperations implements APIOperations, Serializable {
 
     @Override
     public Queue<Videojuego> buscarJuegosBase(String nameGame) {
-        /*GameSelected = new Videojuego(nameGame, "Steam");
-        Queue<Videojuego> filaResultados = new Queue<>();
-        filaResultados.enqueue(steamTreeGames.get(GameSelected));
-        return filaResultados;*/
         return null;
     }
 
@@ -38,7 +31,6 @@ public class STEAMOperations implements APIOperations, Serializable {
     @Override
     public Videojuego buscarJuegoByName(String nameGame) {
         GameSelected = new Videojuego(nameGame);
-        //Videojuego coincidencia = steamTreeGames.get(GameSelected);
         Videojuego coincidencia = steamHashMapQGames.getValue(Comparator.adaptString(GameSelected.getName()));
         if(coincidencia == null){
             return GameSelected;
@@ -59,19 +51,11 @@ public class STEAMOperations implements APIOperations, Serializable {
 
     public static void reloadTree() throws IOException {
         LocalData.loadSteamTree();
-        System.out.println("Hash Map Quadratic STEAM correctamente Cargado!");
+        System.out.println("Hash Map Quadratic STEAM correctamente Cargado ✅!");
     }
 
-    public void showGames(){
-        //steamTreeGames.inOrden();
-    }
 
     //-------SET / GET / INSERT -----------------
-
-    public static void insertSteamTreeGame(Videojuego game){
-       steamTreeGames.insert(game);
-    }
-
     public static void insertSteamMapQGame(Videojuego game){
         steamHashMapQGames.add(game.getName(), game);
     }

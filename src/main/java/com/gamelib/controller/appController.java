@@ -28,12 +28,12 @@ public class appController implements Initializable {
 
     private void addListenerAddGame(){
         addGame.addListener(
-                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-                    if(newValue){
-                        addUIGame();
-                        addGame.set(false);
-                    }
+            (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+                if(newValue){
+                    addUIGame();
+                    addGame.set(false);
                 }
+            }
         );
     }
 
@@ -44,11 +44,6 @@ public class appController implements Initializable {
         FlowPaneGames.getChildren().add(newUIGame.getGameVBox());
     }
 
-    public void removeUIGame(){
-
-        FlowPaneGames.getChildren().add(newUIGame.getGameVBox()
-        );
-    }
     @FXML
     private void openMenuAddGame(ActionEvent actionEvent) throws IOException {
         SceneController.sceneMenuAddGame();

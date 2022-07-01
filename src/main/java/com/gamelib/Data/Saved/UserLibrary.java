@@ -13,24 +13,24 @@ import java.nio.file.Path;
 public class UserLibrary implements Serializable{
 
 
-    private static AvlTree<Videojuego> gamesLibraryTree = new AvlTree<>(Videojuego.class);
+    private static AvlTree<Videojuego> gamesUserLibraryTree = new AvlTree<>(Videojuego.class);
     private static DynamicArray<Videojuego> arrayInOrden = new DynamicArray<>(Videojuego.class);
 
     public static void addUIGame(Videojuego game) throws IOException {
-        gamesLibraryTree.insert(game);
+        gamesUserLibraryTree.insert(game);
         saveUserDataJson();
     }
     public static boolean constainsUIGame(Videojuego game) {
-        return gamesLibraryTree.contains(game);
+        return gamesUserLibraryTree.contains(game);
     }
 
     public static void removeUIGame(Videojuego game) throws IOException {
-        gamesLibraryTree.remove(game);
+        gamesUserLibraryTree.remove(game);
         saveUserDataJson();
     }
 
     public static void listAllGames(){
-        arrayInOrden = gamesLibraryTree.getList();
+        arrayInOrden = gamesUserLibraryTree.getList();
     }
     public static void readTree(){
         if(!arrayInOrden.isEmpty()){
@@ -56,7 +56,7 @@ public class UserLibrary implements Serializable{
     }
 
     public static DynamicArray<Videojuego> saveFromTree(){
-        return gamesLibraryTree.getList();
+        return gamesUserLibraryTree.getList();
     }
 
 
@@ -77,7 +77,7 @@ public class UserLibrary implements Serializable{
         }
     }
     public static void loadInTree(Videojuego game){
-        gamesLibraryTree.insert(game);
+        gamesUserLibraryTree.insert(game);
     }
 
 

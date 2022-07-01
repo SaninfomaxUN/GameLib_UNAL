@@ -32,13 +32,8 @@ public class LocalData implements Serializable{
             JsonObject gsonGame = gsonElementGame.getAsJsonObject();
             String name = gsonGame.get("name").getAsString();
             String appid = gsonGame.get("appid").getAsString();
-            //insertInSteamTree(new Videojuego(name, "Steam", appid));//-----Insert in Steam Tree
             insertInSteamMapQuadratic(new Videojuego(Comparator.adaptString(name) , "Steam", appid));//-----Insert in Steam Map Quadratic
         }
-    }
-
-    public static void insertInSteamTree(Videojuego game){
-        STEAMOperations.insertSteamTreeGame(game);
     }
 
     public static void insertInSteamMapQuadratic(Videojuego game){
